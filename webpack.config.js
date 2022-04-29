@@ -2,6 +2,7 @@ const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin")
+const TerserPlugin = require('terser-webpack-plugin')
 
 
 module.exports = {
@@ -37,14 +38,21 @@ module.exports = {
   optimization: {
     minimizer: [
       new CssMinimizerPlugin(),
+      new TerserPlugin()
     ],
   },
   plugins: [
-    new HtmlWebpackPlugin(),
+    new HtmlWebpackPlugin({
+      hash: true,
+      title: 'Three.js Boilerplate',
+      template: './src/index.html',
+      filename: './index.html' //relative to root of the application
+    }),
     new MiniCssExtractPlugin(),
     new CssMinimizerPlugin()
   ],
   devServer: {
+    watchFiles: ["./src/**/*"],
     static: './dist',
   }
 }
