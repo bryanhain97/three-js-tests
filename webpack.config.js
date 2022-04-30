@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin")
 const TerserPlugin = require('terser-webpack-plugin')
-
+const EslintWebpackPlugin = require('eslint-webpack-plugin')
 
 module.exports = {
   mode: "development",
@@ -49,7 +49,8 @@ module.exports = {
       filename: './index.html' //relative to root of the application
     }),
     new MiniCssExtractPlugin(),
-    new CssMinimizerPlugin()
+    new CssMinimizerPlugin(),
+    new EslintWebpackPlugin()
   ],
   devServer: {
     watchFiles: ["./src/**/*"],

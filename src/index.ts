@@ -1,10 +1,6 @@
 import './index.css';
 
-
-
-const whaddup: Function = (name: string): void => {
+// Write Code here
+const greet = (name) => {
     console.log(name)
 }
-
-
-whaddup('Whaddup bryan?')
