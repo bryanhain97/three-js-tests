@@ -1,8 +1,6 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box
-}
-body {
-    background-color: rgb(216, 191, 224)
+@import '_globals.scss';
+
+h1.headline {
+    padding: 1rem 0;
+    text-align: center;
 }

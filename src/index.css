@@ -4,6 +4,15 @@
   box-sizing: border-box;
 }
 
+html {
+  overflow: hidden;
+}
+
 body {
   background-color: rgb(216, 191, 224);
+}
+
+h1.headline {
+  padding: 1rem 0;
+  text-align: center;
 }
