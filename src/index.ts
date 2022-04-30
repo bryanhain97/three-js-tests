@@ -4,3 +4,5 @@ import './index.css';
 const greet = (name) => {
     console.log(name)
 }
+
+greet('Hey Bryan')
