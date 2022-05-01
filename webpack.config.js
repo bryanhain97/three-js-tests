@@ -57,8 +57,8 @@ module.exports = {
     new CopyPlugin({ // only works if webpack mode is set to production!
       patterns: [
         {
-          from: './src/fonts',
-          to: './fonts/',
+          from: './src/assets/fonts',
+          to: './assets/fonts/',
           context: path.resolve(__dirname),
           force: true,
         }

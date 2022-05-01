@@ -8,23 +8,24 @@ import GUI from 'lil-gui'
 const gui = new GUI()
 const fontLoader = new FontLoader()
 const text = new THREE.Mesh()
-fontLoader.load('/fonts/helvetiker_regular.typeface.json', font => {
+fontLoader.load('assets/fonts/helvetiker_regular.typeface.json', font => {
     const textGeometry = new TextGeometry('thatguybryan',
         {
             font,
-            size: 0.5,
+            size: 1,
             height: 0.1,
-            curveSegments: 15,
-            bevelSegments: 15,
-            bevelEnabled: true,
-            bevelSize: 0,
-            bevelThickness: 0.1,
-            bevelOffset: 0
+            curveSegments: 6,
+            bevelSegments: 6,
+            // bevelEnabled: true,
+            // bevelSize: 0,
+            // bevelThickness: 0,
+            // bevelOffset: 0
         }
     )
     text.geometry = textGeometry
     text.material = new THREE.MeshBasicMaterial({
-        color: new THREE.Color(0xfccc00)
+        color: new THREE.Color(0xffffcc),
+        wireframe: true
     })
     text.geometry.center()
     scene.add(text)
@@ -35,7 +36,6 @@ const sizes = {
 }
 const canvas = document.querySelector('canvas.webgl') as HTMLCanvasElement
 const scene = new THREE.Scene()
-
 
 // GUI Debugging
 
@@ -63,7 +63,8 @@ const scene = new THREE.Scene()
 const camera = new THREE.PerspectiveCamera(75, sizes.x / sizes.y, 0.01, 1000)
 const controls = new OrbitControls(camera, canvas)
 controls.enableDamping = true
-camera.position.z = 5
+camera.position.z = 7
+camera.lookAt(text.position)
 controls.update()
 // camera.aspect = sizes.x/sizes.y
 
