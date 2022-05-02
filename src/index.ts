@@ -12,20 +12,22 @@ fontLoader.load('assets/fonts/helvetiker_regular.typeface.json', font => {
     const textGeometry = new TextGeometry('thatguybryan',
         {
             font,
-            size: 1,
-            height: 0.1,
+            size: 0.5,
+            height: 0.2,
             curveSegments: 6,
             bevelSegments: 6,
-            // bevelEnabled: true,
-            // bevelSize: 0,
-            // bevelThickness: 0,
-            // bevelOffset: 0
+            bevelEnabled: true,
+            bevelSize: 0.03,
+            bevelThickness: 0.03,
+            bevelOffset: 0
         }
     )
     text.geometry = textGeometry
-    text.material = new THREE.MeshBasicMaterial({
-        color: new THREE.Color(0xffffcc),
-        wireframe: true
+    text.material = new THREE.MeshStandardMaterial({
+        color: new THREE.Color(0xbbbbaa),
+        flatShading: true,
+        roughness: 0.3,
+        metalness: 0.4
     })
     text.geometry.center()
     scene.add(text)
@@ -37,33 +39,12 @@ const sizes = {
 const canvas = document.querySelector('canvas.webgl') as HTMLCanvasElement
 const scene = new THREE.Scene()
 
-// GUI Debugging
-
-// Material
-// const material = new THREE.MeshStandardMaterial({
-//     // color: 0xffaaaa,
-//     // wireframe: true
-//     // flatShading: true
-//     roughness: 0.4,
-//     metalness: 0.1
-// })
-// Geometries
-// const sphereGeometry = new THREE.SphereBufferGeometry(0.5, 10, 10)
-// const sphere = new THREE.Mesh(sphereGeometry, material)
-// sphere.position.set(-2, 0, 0)
-// const planeGeometry = new THREE.PlaneBufferGeometry(1, 1)
-// const plane = new THREE.Mesh(planeGeometry, material)
-// plane.material.side = THREE.DoubleSide
-// const torusGeometry = new THREE.TorusBufferGeometry(0.4, 0.1, 15, 15)
-// const torus = new THREE.Mesh(torusGeometry, material)
-// torus.position.x = 2
-// const textGeometry = new TextBufferGeometry('Threejs Bryan Hain', )
 
 // Camera // Controls
 const camera = new THREE.PerspectiveCamera(75, sizes.x / sizes.y, 0.01, 1000)
 const controls = new OrbitControls(camera, canvas)
 controls.enableDamping = true
-camera.position.z = 7
+camera.position.z = 10
 camera.lookAt(text.position)
 controls.update()
 // camera.aspect = sizes.x/sizes.y
@@ -77,17 +58,41 @@ window.addEventListener('resize', () => {
         renderer.setSize(sizes.x, sizes.y)
     }, 1000)
 })
+
+
+// Geometries
+const planeGeometry = new THREE.PlaneBufferGeometry(5, 5)
+const planeMaterial = new THREE.MeshStandardMaterial()
+const plane = new THREE.Mesh(planeGeometry, planeMaterial)
+plane.material.color = new THREE.Color(0xffffff)
+plane.material.side = THREE.DoubleSide
+plane.material.transparent = true
+plane.position.set(0, 0, -3)
+plane.material.opacity = 0.8
+scene.add(plane)
 // Light
-// const ambientLight = new THREE.AmbientLight(0xfff, 1)
-const pointLight = new THREE.PointLight(0x00ffaa, 1, 100)
-pointLight.position.set(2, 2, 2)
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.3)
+gui.add(ambientLight, 'intensity', 0.1, 1, 0.01)
+// const pointLight = new THREE.PointLight(0xffffaa, 0.5, 100)
+// pointLight.position.set(2, 2, 2)
+const spotLight = new THREE.SpotLight(0xffff99, 0.8)
+spotLight.angle = Math.PI * 0.05
+// const spotLightHelper = new THREE.SpotLightHelper(spotLight, 0xffffff)
+spotLight.position.set(- 5.5, 3, 11)
+gui.add(spotLight.position, 'x', -10, 10, 0.1)
+gui.add(spotLight.position, 'y', 0.1, 10, 0.1)
+gui.add(spotLight.position, 'z', 0.1, 20, 0.1)
+
+scene.add(spotLight)
+// scene.add(spotLight, spotLightHelper)
+
 // Scene
 scene.add(camera)
 // scene.add(sphere)
 // scene.add(plane)
 // scene.add(torus)
-scene.add(pointLight)
-// scene.add(ambientLight)
+// scene.add(pointLight)
+scene.add(ambientLight)
 // Renderer
 const renderer = new THREE.WebGLRenderer({
     canvas
@@ -95,9 +100,10 @@ const renderer = new THREE.WebGLRenderer({
 renderer.setSize(sizes.x, sizes.y)
 
 const animate = () => {
-    text.rotation.y += 0.01
     renderer.render(scene, camera)
     controls.update()
+    plane.rotation.y += Math.PI * 0.01
+    // spotLightHelper.update()
     window.requestAnimationFrame(animate)
 }
 animate()
