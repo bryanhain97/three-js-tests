@@ -1,14 +1,8 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const CssMinimizerPlugin = require("css-minimizer-webpack-plugin")
-const TerserPlugin = require('terser-webpack-plugin')
-const EslintWebpackPlugin = require('eslint-webpack-plugin')
-const CopyPlugin = require('copy-webpack-plugin')
-const WriteFileWebpackPlugin = require('write-file-webpack-plugin')
 
 module.exports = {
-  mode: "development",
   entry: path.resolve(__dirname, 'src/index.ts'),
   output: {
     filename: "bundle.js",
@@ -34,14 +28,8 @@ module.exports = {
       {
         test: /\.css$/i,
         use: [MiniCssExtractPlugin.loader, "css-loader"],
-      },
+      }
     ]
-  },
-  optimization: {
-    minimizer: [
-      new CssMinimizerPlugin(),
-      new TerserPlugin()
-    ],
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -50,20 +38,7 @@ module.exports = {
       template: './src/index.html',
       filename: './index.html' //relative to root of the application
     }),
-    new MiniCssExtractPlugin(),
-    new CssMinimizerPlugin(),
-    new EslintWebpackPlugin(),
-    new WriteFileWebpackPlugin(),
-    new CopyPlugin({ // only works if webpack mode is set to production!
-      patterns: [
-        {
-          from: './src/assets/fonts',
-          to: './assets/fonts/',
-          context: path.resolve(__dirname),
-          force: true,
-        }
-      ],
-    }),
+    new MiniCssExtractPlugin()
   ],
   devServer: {
     watchFiles: ["./src/**/*"],

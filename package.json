@@ -4,9 +4,9 @@
   "description": "creating threejs typescript boilerplate",
   "main": "index.js",
   "scripts": {
-    "dev": "npm run sass & npx webpack-dev-server",
-    "build": "npx webpack build --mode=production",
-    "sass": "npx sass --watch ./src/styles/index.scss ./src/index.css --no-source-map",
+    "dev": "npm run sass & npx webpack -c ./webpack.dev.js",
+    "build": "npx webpack build -c ./webpack.prod.js",
+    "sass": "npx sass --watch ./src/styles/index.scss ./src/index.css",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Bryan Hain",
@@ -34,6 +34,7 @@
     "webpack": "^5.72.0",
     "webpack-cli": "^4.9.2",
     "webpack-dev-server": "^4.8.1",
+    "webpack-merge": "^5.8.0",
     "write-file-webpack-plugin": "^4.5.1"
   },
   "dependencies": {
