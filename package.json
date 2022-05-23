@@ -4,7 +4,7 @@
   "description": "creating threejs typescript boilerplate",
   "main": "index.js",
   "scripts": {
-    "dev": "npm run sass & npx webpack -c ./webpack.dev.js",
+    "dev": "npm run sass & npx webpack serve -c ./webpack.dev.js",
     "build": "npx webpack build -c ./webpack.prod.js",
     "sass": "npx sass --watch ./src/styles/index.scss ./src/index.css",
     "test": "echo \"Error: no test specified\" && exit 1"
